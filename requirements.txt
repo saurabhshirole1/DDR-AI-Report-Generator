@@ -1,0 +1,9 @@
+# requirements.txt
+# All Python packages needed to run this project
+# Install with: pip install -r requirements.txt
+
+streamlit          # Web app framework - builds our UI
+PyMuPDF            # PDF reading library (imported as fitz)
+reportlab          # PDF creation library - generates downloadable PDFs
+requests           # For making HTTP calls to Groq API
+python-dotenv      # For reading .env file (API keys)
