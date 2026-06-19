@@ -1,6 +1,6 @@
 # 📋 DDR Report Generator
 
-A **Streamlit web app** that takes two PDF documents, extracts their content using AI, and generates a professional **Due Diligence Report (DDR)** — downloadable as a PDF.
+A **Streamlit web app** that takes two PDF documents, extracts their content using AI, and generates a professional **Detailed Diagnostic Report (DDR)** — downloadable as a PDF.
 
 > Built with: Python · Streamlit · Groq AI · PyMuPDF · ReportLab
 

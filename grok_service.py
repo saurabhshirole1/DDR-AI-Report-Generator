@@ -56,7 +56,7 @@ def build_ddr_prompt(doc1_text: str, doc2_text: str,
     
     # This is the full prompt we send to Groq
     # We use triple quotes for multi-line strings
-    prompt = f"""You are an expert business analyst specializing in Due Diligence Reports (DDR).
+    prompt = f"""You are an expert business analyst specializing in Detailed Diagnostic Report (DDR).
 
 You have been given the content of two documents:
 
@@ -66,7 +66,7 @@ You have been given the content of two documents:
 === DOCUMENT 2: {doc2_name} ===
 {doc2_preview}
 
-Your task is to generate a comprehensive, professional Due Diligence Report (DDR) based on these two documents.
+Your task is to generate a comprehensive, professional Detailed Diagnostic Report (DDR) based on these two documents.
 
 The report MUST include ALL of the following sections in this exact order:
 {sections_text}
@@ -120,7 +120,7 @@ def call_groq_api(prompt: str) -> str:
         "messages": [
             {
                 "role": "system",      # System message = background instructions for AI
-                "content": "You are an expert business analyst who creates professional Due Diligence Reports. Always be thorough, factual, and structured."
+                "content": "You are an expert business analyst who creates professional Detailed Diagnostic Reports. Always be thorough, factual, and structured."
             },
             {
                 "role": "user",        # User message = our actual request

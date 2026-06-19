@@ -275,7 +275,7 @@ def reset_app():
     st.rerun()
 
 
-# ---------------------------------------------------------------------------
+# ---------------------------------------Due Diligence Report------------------------------------
 # SIDEBAR
 # ---------------------------------------------------------------------------
 
@@ -286,7 +286,7 @@ with st.sidebar:
     <div style="text-align: center; padding: 10px 0 20px 0;">
         <div style="font-size: 3rem;">📋</div>
         <div style="font-size: 1.3rem; font-weight: 800; color: #ff4b4b;">DDR Generator</div>
-        <div style="font-size: 0.8rem; color: #888; margin-top: 4px;">Due Diligence Report AI</div>
+        <div style="font-size: 0.8rem; color: #888; margin-top: 4px;">Detailed Diagnostic Report AI</div>
     </div>
     """, unsafe_allow_html=True)
 

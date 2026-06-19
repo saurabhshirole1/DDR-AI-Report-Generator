@@ -52,7 +52,7 @@ MAX_PAGES = 50
 # ---------------------------------------------------------------------------
 
 # Name of the report shown at the top
-REPORT_TITLE = "Due Diligence Report (DDR)"
+REPORT_TITLE = "Detailed Diagnostic Report (DDR)"
 
 # Company/app name shown in the header
 APP_NAME = "DDR Report Generator"
