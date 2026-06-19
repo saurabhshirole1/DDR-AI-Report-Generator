@@ -2,7 +2,7 @@
 # ---------------------------------------------------------------------------
 # Main Streamlit application for DDR Report Generator
 # Dark themed UI with full sidebar
-# Run with: streamlit run app.py --server.port 8502
+# Run with: streamlit run app.py --server.port 8501
 # ---------------------------------------------------------------------------
 
 import streamlit as st
@@ -12,6 +12,11 @@ from grok_service import generate_ddr_report
 from report_generator import build_report_object, format_report_for_display
 from pdf_export import export_report_to_pdf
 from config import APP_NAME, MAX_FILE_SIZE_MB
+
+import os
+
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 # ---------------------------------------------------------------------------
 # PAGE CONFIG - must be the very first Streamlit command
@@ -292,39 +297,6 @@ with st.sidebar:
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
-    # ---- API KEY INPUT ----
-    st.markdown("### 🔑 Groq API Key")
-
-    # st.text_input with type="password" hides the key while typing
-    # This lets users enter their key directly in the app
-    # We store it in session_state so it persists across reruns
-    api_key_input = st.text_input(
-        label="Enter your Groq API Key",
-        type="password",                    # Hides the key while typing
-        placeholder="gsk_xxxxxxxxxxxx",
-        key="api_key_input",
-        help="Get your free key at console.groq.com"
-    )
-
-    # If user entered a key here, update the environment variable
-    # This overrides whatever is in the .env file
-    if api_key_input:
-        import os
-        os.environ["GROQ_API_KEY"] = api_key_input
-        st.markdown("""
-        <div style="font-size:0.78rem; color:#81c784; margin-top:4px;">
-            ✅ API key set successfully
-        </div>""", unsafe_allow_html=True)
-    else:
-        st.markdown("""
-        <div class="api-key-note">
-            💡 Or add to <code>.env</code> file:<br>
-            <code>GROQ_API_KEY=gsk_xxx</code><br>
-            Get free key at <a href="https://console.groq.com" target="_blank" 
-            style="color:#4fc3f7;">console.groq.com</a>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
     # ---- HOW TO USE ----
     st.markdown("### 📖 How to Use")
@@ -531,7 +503,7 @@ if not both_uploaded:
     st.markdown(f"""
     <div class="hint-box">
         <div class="hint-emoji">👆</div>
-        <div class="hint-title">Upload both PDFs and enter your API key to get started</div>
+        <div class="hint-title">Upload both PDFs to get started</div>
         <div class="hint-subtitle">
             The system will extract text + images, analyze with Groq AI (llama-3.3-70b-versatile),<br>
             and generate a professional DDR report with embedded images.<br><br>
@@ -592,7 +564,7 @@ if generate_clicked and both_uploaded:
         progress.empty()
         status.empty()
         st.error(f"❌ Error: {str(e)}")
-        st.info("💡 Make sure your Groq API key is entered in the sidebar or .env file.")
+        st.info("💡 Please check your Streamlit Secrets configuration.")
 
 
 # ---------------------------------------------------------------------------
