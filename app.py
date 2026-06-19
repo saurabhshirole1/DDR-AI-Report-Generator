@@ -5,10 +5,7 @@ from grok_service import generate_ddr_report
 from report_generator import build_report_object, format_report_for_display
 from pdf_export import export_report_to_pdf
 from config import APP_NAME, MAX_FILE_SIZE_MB
-import os
 
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
 # PAGE CONFIG - must be the very first Streamlit command
 
