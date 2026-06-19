@@ -1,27 +1,13 @@
-# grok_service.py
-# ---------------------------------------------------------------------------
-# This file handles ALL communication with the Groq API.
-# Groq is the service that runs our AI model (llama-3.3-70b-versatile).
-#
-# How it works:
-# 1. We send a prompt (instructions + PDF content) to Groq
-# 2. Groq sends back an AI-generated response
-# 3. We return that response to the rest of our app
-#
-# Groq uses the OpenAI API format - so the request structure looks
-# exactly like OpenAI requests but goes to Groq's servers.
-# ---------------------------------------------------------------------------
-
-import requests    # For making HTTP requests to Groq API
-import json        # For working with JSON data
+import requests   
+import json       
 
 from config import (
-    GROQ_API_KEY,    # Our API key
-    GROQ_MODEL,      # Model name (llama-3.3-70b-versatile)
-    GROQ_API_URL,    # API endpoint URL
-    MAX_TOKENS,      # Max length of AI response
-    TEMPERATURE,     # How creative the AI should be
-    REPORT_SECTIONS  # The sections our report should have
+    GROQ_API_KEY,    
+    GROQ_MODEL,      
+    GROQ_API_URL,    
+    MAX_TOKENS,      
+    TEMPERATURE,     
+    REPORT_SECTIONS  
 )
 
 
@@ -116,19 +102,19 @@ def call_groq_api(prompt: str) -> str:
     # This is the request body - what we're asking Groq to do
     # It follows the OpenAI chat format
     payload = {
-        "model": GROQ_MODEL,          # Which AI model to use
+        "model": GROQ_MODEL,         
         "messages": [
             {
-                "role": "system",      # System message = background instructions for AI
+                "role": "system",     
                 "content": "You are an expert business analyst who creates professional Detailed Diagnostic Reports. Always be thorough, factual, and structured."
             },
             {
-                "role": "user",        # User message = our actual request
-                "content": prompt      # The prompt we built with document content
+                "role": "user",       
+                "content": prompt      
             }
         ],
-        "max_tokens": MAX_TOKENS,      # Max length of response
-        "temperature": TEMPERATURE     # How creative/focused the AI should be
+        "max_tokens": MAX_TOKENS,     
+        "temperature": TEMPERATURE     
     }
     
     try:

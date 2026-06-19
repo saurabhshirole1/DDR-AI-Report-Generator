@@ -1,18 +1,7 @@
-# pdf_parser.py
-# ---------------------------------------------------------------------------
-# This file is responsible for reading PDFs and extracting:
-#   1. Text content (all the words from the PDF)
-#   2. Images (converted to base64 so we can send to Groq)
-#
-# We use PyMuPDF (imported as fitz) to read PDFs.
-# PyMuPDF is a fast and reliable PDF reading library.
-# ---------------------------------------------------------------------------
-
-import fitz          # PyMuPDF - for reading PDF files
-import base64        # For converting images to text format (base64)
-import io            # For handling image data in memory
-
-from config import MAX_PAGES   # We import our settings from config.py
+import fitz          
+import base64        
+import io            
+from config import MAX_PAGES   
 
 
 def extract_text_from_pdf(pdf_file) -> str:
@@ -27,27 +16,17 @@ def extract_text_from_pdf(pdf_file) -> str:
     - A single string with all the text from the PDF
     """
     
-    # pdf_file.read() gives us the raw bytes of the PDF
-    # fitz.open() can open PDFs from bytes using stream parameter
     pdf_bytes = pdf_file.read()
     
-    # Open the PDF from memory (not from disk)
-    # filetype="pdf" tells fitz what kind of file this is
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
     
-    # This will hold all the extracted text
     extracted_text = ""
     
-    # Loop through each page of the PDF
-    # We limit to MAX_PAGES to avoid overloading Groq with too much text
     total_pages = min(len(doc), MAX_PAGES)
     
     for page_num in range(total_pages):
-        # Get the page object
         page = doc[page_num]
         
-        # Extract text from this page
-        # get_text() returns all text on the page as a string
         page_text = page.get_text()
         
         # Add page number so we know where text came from
@@ -123,7 +102,6 @@ def extract_images_from_pdf(pdf_file) -> list:
                 # Get the raw image bytes
                 image_bytes = base_image["image"]
                 
-                # Convert bytes to base64 string
                 # b64encode() converts bytes to base64 bytes
                 # decode("utf-8") converts base64 bytes to a string
                 image_base64 = base64.b64encode(image_bytes).decode("utf-8")
@@ -194,7 +172,7 @@ def parse_pdf(pdf_file) -> dict:
     images = extract_images_from_pdf(pdf_file)
     
     return {
-        "text": text,           # All text from the PDF
-        "images": images,       # List of base64 image strings
-        "info": info            # Metadata (pages, title, etc.)
+        "text": text,          
+        "images": images,      
+        "info": info            
     }

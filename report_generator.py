@@ -1,17 +1,5 @@
-# report_generator.py
-# ---------------------------------------------------------------------------
-# This file takes the raw AI-generated text from Groq
-# and structures it into a clean, organized report object.
-#
-# Why do we need this?
-# - Groq gives us raw markdown text
-# - We need to parse it into sections
-# - We add metadata (date, document names, etc.)
-# - We prepare it for both Streamlit display and PDF export
-# ---------------------------------------------------------------------------
-
-import re                    # For pattern matching in text (regex)
-from datetime import datetime  # For adding current date to report
+import re                    
+from datetime import datetime 
 from config import REPORT_TITLE, APP_NAME, REPORT_SECTIONS
 
 
@@ -48,10 +36,7 @@ def parse_report_sections(report_text: str) -> dict:
     
     sections = {}
     
-    # Split the text by lines starting with ##
-    # re.split() splits a string based on a pattern
-    # r"(?=^##\s)" means "split at positions where ## appears at start of line"
-    # re.MULTILINE makes ^ match start of each line
+
     parts = re.split(r"(?=^##\s)", report_text, flags=re.MULTILINE)
     
     for part in parts:
@@ -65,11 +50,8 @@ def parse_report_sections(report_text: str) -> dict:
             lines = part.split("\n", 1)   # Split at first newline only
             
             if len(lines) >= 1:
-                # Clean up the section header
-                # Remove ## and strip whitespace
                 header = lines[0].replace("##", "").strip()
                 
-                # Get the content (everything after the header)
                 content = lines[1].strip() if len(lines) > 1 else ""
                 
                 # Store in dictionary

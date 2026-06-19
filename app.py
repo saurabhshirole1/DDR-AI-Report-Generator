@@ -1,10 +1,3 @@
-# app.py
-# ---------------------------------------------------------------------------
-# Main Streamlit application for DDR Report Generator
-# Dark themed UI with full sidebar
-# Run with: streamlit run app.py --server.port 8501
-# ---------------------------------------------------------------------------
-
 import streamlit as st
 import time
 from pdf_parser import parse_pdf
@@ -12,15 +5,12 @@ from grok_service import generate_ddr_report
 from report_generator import build_report_object, format_report_for_display
 from pdf_export import export_report_to_pdf
 from config import APP_NAME, MAX_FILE_SIZE_MB
-
 import os
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
-# ---------------------------------------------------------------------------
 # PAGE CONFIG - must be the very first Streamlit command
-# ---------------------------------------------------------------------------
 
 st.set_page_config(
     page_title="DDR Report Generator",
@@ -29,9 +19,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"   # Sidebar open by default
 )
 
-# ---------------------------------------------------------------------------
 # CUSTOM CSS - Dark theme + sidebar styling
-# ---------------------------------------------------------------------------
 
 st.markdown("""
 <style>
@@ -229,9 +217,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ---------------------------------------------------------------------------
 # HELPER FUNCTIONS
-# ---------------------------------------------------------------------------
 
 def check_file_size(uploaded_file) -> bool:
     """Check if the uploaded file is within the allowed size limit."""
@@ -280,9 +266,7 @@ def reset_app():
     st.rerun()
 
 
-# ---------------------------------------Due Diligence Report------------------------------------
 # SIDEBAR
-# ---------------------------------------------------------------------------
 
 with st.sidebar:
 
@@ -381,9 +365,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 
-# ---------------------------------------------------------------------------
 # MAIN PAGE - HEADER
-# ---------------------------------------------------------------------------
 
 st.markdown("""
 <div class="header-box">
@@ -396,9 +378,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# ---------------------------------------------------------------------------
 # FILE UPLOAD SECTION
-# ---------------------------------------------------------------------------
 
 pdf1_data = None
 pdf2_data = None
@@ -474,9 +454,7 @@ if pdf2_data is None and "pdf2_data" in st.session_state:
     pdf2_data = st.session_state["pdf2_data"]
 
 
-# ---------------------------------------------------------------------------
 # DIVIDER + GENERATE BUTTON
-# ---------------------------------------------------------------------------
 
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
@@ -489,9 +467,7 @@ generate_clicked = st.button(
 )
 
 
-# ---------------------------------------------------------------------------
 # HINT BOX - shown when files not uploaded yet
-# ---------------------------------------------------------------------------
 
 if not both_uploaded:
     missing = []
@@ -513,9 +489,7 @@ if not both_uploaded:
     """, unsafe_allow_html=True)
 
 
-# ---------------------------------------------------------------------------
 # REPORT GENERATION
-# ---------------------------------------------------------------------------
 
 if generate_clicked and both_uploaded:
     st.markdown("---")
@@ -567,9 +541,7 @@ if generate_clicked and both_uploaded:
         st.info("💡 Please check your Streamlit Secrets configuration.")
 
 
-# ---------------------------------------------------------------------------
 # DISPLAY REPORT
-# ---------------------------------------------------------------------------
 
 if "report" in st.session_state:
     report = st.session_state["report"]
@@ -622,9 +594,7 @@ if "report" in st.session_state:
         </div>""", unsafe_allow_html=True)
 
 
-# ---------------------------------------------------------------------------
 # FOOTER
-# ---------------------------------------------------------------------------
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("""

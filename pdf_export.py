@@ -1,31 +1,17 @@
-# pdf_export.py
-# ---------------------------------------------------------------------------
-# This file converts our generated report into a downloadable PDF file.
-#
-# We use the 'reportlab' library to create PDFs in Python.
-# ReportLab lets us control fonts, colors, spacing, and layout.
-#
-# The PDF will look professional with:
-# - A cover page with title and document info
-# - Properly formatted sections with headers
-# - Page numbers
-# - Clean typography
-# ---------------------------------------------------------------------------
-
-from reportlab.lib.pagesizes import A4            # Standard A4 page size
+from reportlab.lib.pagesizes import A4            
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch              # For measurements
-from reportlab.lib import colors                  # For colors
+from reportlab.lib.units import inch              
+from reportlab.lib import colors                  
 from reportlab.platypus import (
-    SimpleDocTemplate,    # Main PDF document builder
-    Paragraph,           # For text blocks
-    Spacer,              # For adding empty space
-    HRFlowable,         # For horizontal lines
-    PageBreak            # For page breaks
+    SimpleDocTemplate,    
+    Paragraph,           
+    Spacer,              
+    HRFlowable,         
+    PageBreak            
 )
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
-import io                # For creating files in memory (not on disk)
-import re                # For cleaning markdown formatting
+import io                
+import re                
 
 
 def clean_markdown(text: str) -> str:
@@ -196,8 +182,8 @@ def process_content_to_paragraphs(content: str, styles: dict) -> list:
         else:
             clean_text = clean_markdown(line)
             if clean_text:
-                # Wrap in try-except because special characters can sometimes
-                # cause issues with ReportLab's Paragraph
+               
+            
                 try:
                     elements.append(Paragraph(clean_text, styles["body"]))
                 except Exception:
@@ -236,13 +222,10 @@ def export_report_to_pdf(report: dict) -> bytes:
     # Get our custom styles
     styles = create_pdf_styles()
     
-    # This list holds all the content elements of the PDF
-    # ReportLab builds the PDF from this list top to bottom
+  
     elements = []
     
-    # -----------------------------------------------------------------------
     # COVER PAGE
-    # -----------------------------------------------------------------------
     
     # Add some space at the top
     elements.append(Spacer(1, 1 * inch))
@@ -297,9 +280,7 @@ def export_report_to_pdf(report: dict) -> bytes:
         # Space after each section
         elements.append(Spacer(1, 0.2 * inch))
     
-    # -----------------------------------------------------------------------
     # BUILD THE PDF
-    # -----------------------------------------------------------------------
     
     # build() takes our elements list and creates the actual PDF
     doc.build(elements)
